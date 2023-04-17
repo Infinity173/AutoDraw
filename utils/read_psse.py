@@ -86,22 +86,22 @@ def string2int(load_data,generator_data,branch_data,transformer_data):
             transformer_list.append(list_row)
     return load_list,generator_list,branch_list,transformer_list
 
-if __name__ == '__main__':
-    path = 'PSSE/ieee39.raw'
-    load_data,generator_data,branch_data,transformer_data = readRaw(path)
-    load_list,generator_list,branch_list,transformer_list = string2int(load_data,generator_data,branch_data,transformer_data)
+# if __name__ == '__main__':
+#     path = 'PSSE/ieee39.raw'
+#     load_data,generator_data,branch_data,transformer_data = readRaw(path)
+#     load_list,generator_list,branch_list,transformer_list = string2int(load_data,generator_data,branch_data,transformer_data)
 
-    topology_list = []
-    for branch in branch_list:
-        # if branch not in topology_list:
-        topology_list.append(branch)
-    for transformer in transformer_list:
-        # if transformer not in topology_list:
-        topology_list.append(transformer)
+#     topology_list = []
+#     for branch in branch_list:
+#         # if branch not in topology_list:
+#         topology_list.append(branch)
+#     for transformer in transformer_list:
+#         # if transformer not in topology_list:
+#         topology_list.append(transformer)
     
-    # 绘制力导布局图
-    G = nx.Graph()
-    G.add_edges_from(topology_list)
-    pos = nx.kamada_kawai_layout(G)
-    nx.draw(G, pos, with_labels=True, node_color='r', alpha=0.8)
-    plt.show()
+#     # 绘制力导布局图
+#     G = nx.Graph()
+#     G.add_edges_from(topology_list)
+#     pos = nx.kamada_kawai_layout(G)
+#     nx.draw(G, pos, with_labels=True, node_color='r', alpha=0.8)
+#     plt.show()

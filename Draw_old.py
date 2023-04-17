@@ -7,8 +7,8 @@ import cv2
 import Read_PSSE
 
 # 画布大小与线条厚度
-width = 12000
-height = 12000
+width = 1200
+height = 1200
 thick = 4
 
 # 绘制母线函数
