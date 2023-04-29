@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from utils import read_psse
-from utils import force_layout
-
+from utils import Improved_FR
+import networkx as nx
 
 # 展示图片函数
 def cv_show(img):
@@ -48,7 +48,18 @@ if __name__ == '__main__':
     load_data,generator_data,branch_data,transformer_data = read_psse.readRaw(path)
     load_list,generator_list,branch_list,transformer_list = read_psse.string2int(load_data,generator_data,branch_data,transformer_data)
 
-    bus_node = force_layout.fr_layout(branch_list,transformer_list)
+    topology_list = []
+    for branch in branch_list:
+        topology_list.append(branch)
+    for transformer in transformer_list:
+        topology_list.append(transformer)
+
+    # 绘制力导布局图
+    G = nx.Graph()
+    weighted_edges = Improved_FR.get_edge_weight(branch_list,transformer_list)
+    G.add_weighted_edges_from(weighted_edges)
+    weighted_nodes = Improved_FR.get_node_weight(G,load_list,generator_list) 
+    bus_node = Improved_FR.Improved_FR_Layout(G,iterations=2000,weight="weight",node_degree=weighted_nodes)
     new_data = data_normalization(bus_node)
     
     for branch_topo in branch_list:
@@ -72,7 +83,6 @@ if __name__ == '__main__':
         y_tran_center = int((new_data[t_topo[0]-1][1]+new_data[t_topo[1]-1][1])/2)
         width = 20
         height = 40
-        print(x_tran_center,y_tran_center)
         image = cv2.rectangle(image,(x_tran_center-int(width/2),y_tran_center-int(height/2)),(x_tran_center+int(width/2),y_tran_center+int(height/2)),(255,127,127),2,cv2.LINE_AA)
         if new_data[t_topo[0]-1][1] >= new_data[t_topo[1]-1][1]:
             image = cv2.line(image,pt1,(x_tran_center,y_tran_center+int(height/2)),(0,0,0),2,cv2.LINE_AA)

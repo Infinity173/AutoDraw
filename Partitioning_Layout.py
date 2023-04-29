@@ -2,7 +2,7 @@ import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 import numpy as np
-import Read_PSSE
+from utils import read_psse
 
 # Fluid_Communities分区算法
 def Fluid_Communities_Partitioning(G,k,max_iter):
@@ -55,8 +55,8 @@ def FR_Layout(G,partitioning_result,topology_list,display_index):
 if __name__ == '__main__':
     # 得到拓扑关系
     path = 'PSSE/ieee118.raw'
-    load_data,generator_data,branch_data,transformer_data = Read_PSSE.readRaw(path)
-    _,_,branch_list,transformer_list = Read_PSSE.string2int(load_data,generator_data,branch_data,transformer_data)
+    load_data,generator_data,branch_data,transformer_data = read_psse.readRaw(path)
+    _,_,branch_list,transformer_list = read_psse.string2int(load_data,generator_data,branch_data,transformer_data)
     topology_list = []
     for branch in branch_list:
         topology_list.append(branch)

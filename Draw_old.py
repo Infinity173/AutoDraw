@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import cv2
-import Read_PSSE
+from utils import read_psse
 
 # 画布大小与线条厚度
 width = 1200
@@ -104,8 +104,8 @@ if __name__ == '__main__':
         draw.line((x1,y1,x2,y2),width=3,fill='black')
 
     path = 'PSSE/ieee39.raw'
-    load_data,generator_data,branch_data,transformer_data = Read_PSSE.readRaw(path)
-    load_list,generator_list,branch_list,transformer_list = Read_PSSE.string2int(load_data,generator_data,branch_data,transformer_data)
+    load_data,generator_data,branch_data,transformer_data = read_psse.readRaw(path)
+    load_list,generator_list,branch_list,transformer_list = read_psse.string2int(load_data,generator_data,branch_data,transformer_data)
     for load in load_list:
         x = data[load[0]-1][0]
         y = data[load[0]-1][1]
